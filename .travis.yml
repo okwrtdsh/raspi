@@ -1,0 +1,20 @@
+sudo: required
+services:
+  - docker
+language: bash
+script:
+  - curl -sSL https://get.docker.com | sh
+  - mkdir -p ~/.docker
+  - echo '{ "experimental": "enabled" }' > ~/.docker/config.json
+  - docker version
+  # prepare qemu
+  - docker run --rm --privileged multiarch/qemu-user-static:register --reset
+  # build image
+  - docker build -t rpi-jupyter ./jupyter
+  # push image
+  - >
+    if [ "$TRAVIS_BRANCH" == "master" ] && [ "$TRAVIS_PULL_REQUEST" == "false" ]; then
+      docker login -u="$DOCKER_USER" -p="$DOCKER_PASS"
+      docker tag rpi-jupyter okwrtdsh/rpi-jupyter:latest
+      docker push okwrtdsh/rpi-jupyter:latest
+    fi
