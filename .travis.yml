@@ -1,21 +1,16 @@
-sudo: required
 language: bash
-addons:
-  apt:
-    update: true
-    packages:
-    - docker-ce
-    - wget
-services:
-  - docker
+services: docker
+sudo: required
+install:
+  - docker run --rm --privileged multiarch/qemu-user-static:register --credential yes
+env:
+  - IMAGE=jupyter
 script:
-  - docker run --rm --privileged multiarch/qemu-user-static:register --reset
-  # build image
-  - docker build -t rpi-jupyter ./jupyter
-  # push image
-  - >
-    if [ "$TRAVIS_BRANCH" == "master" ] && [ "$TRAVIS_PULL_REQUEST" == "false" ]; then
-      docker login -u="$DOCKER_USER" -p="$DOCKER_PASS"
-      docker tag rpi-jupyter okwrtdsh/rpi-jupyter:latest
-      docker push okwrtdsh/rpi-jupyter:latest
+  - cd ${IMAGE}
+  - docker build -t okwrtdsh/rpi-${IMAGE}:latest .
+  - docker images
+after_success:
+  - if [ "$TRAVIS_BRANCH" == "master" ] && [ "$TRAVIS_PULL_REQUEST" == "false" ]; then
+      docker login -u="$DOCKER_USER" -p="$DOCKER_PASS" ;
+      docker push okwrtdsh/rpi-${IMAGE}:latest ;
     fi
