@@ -4,6 +4,9 @@ sudo: required
 install:
   - docker run --rm --privileged multiarch/qemu-user-static:register --credential yes
 env:
+  - IMAGE=core
+  - IMAGE=ffmpeg
+  - IMAGE=opencv
   - IMAGE=jupyter
 script:
   - cd ${IMAGE}
