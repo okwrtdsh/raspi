@@ -16,7 +16,7 @@ RUN apt-get update -qq \
 \
  && cd /tmp \
  && wget -O ffmpeg.tar.gz https://github.com/FFmpeg/FFmpeg/archive/${FFMPEG_VERSION}.tar.gz \
- && tar -zxvf ffmpeg.tar.gz \
+ && tar -zxf ffmpeg.tar.gz \
 \
 # build ffmpeg
  && cd /tmp/FFmpeg-${FFMPEG_VERSION} \

@@ -21,9 +21,9 @@ RUN apt-get update -qq \
 # libpng12-dev libx264
  && cd /tmp \
  && wget -O opencv.tar.gz https://github.com/opencv/opencv/archive/${OPENCV_VERSION}.tar.gz \
- && tar -zxvf opencv.tar.gz \
+ && tar -zxf opencv.tar.gz \
  && wget -O opencv_contrib.tar.gz https://github.com/opencv/opencv_contrib/archive/${OPENCV_VERSION}.tar.gz \
- && tar -zxvf opencv_contrib.tar.gz \
+ && tar -zxf opencv_contrib.tar.gz \
  && pip --no-cache-dir install \
 	numpy scipy \
  && cd /tmp/opencv-${OPENCV_VERSION} \
@@ -72,7 +72,7 @@ RUN apt-get update -qq \
 # VLFeat
  && cd /usr/local/src \
  && wget -O vlfeat.tar.gz http://www.vlfeat.org/download/vlfeat-${VLFEAT_VERSION}-bin.tar.gz \
- && tar -zxvf vlfeat.tar.gz \
+ && tar -zxf vlfeat.tar.gz \
  && rm vlfeat.tar.gz \
  && echo "export VLFEAT_DIR=/usr/local/src/vlfeat-${VLFEAT_VERSION}" > /etc/profile.d/vlfeat.sh \
 \
